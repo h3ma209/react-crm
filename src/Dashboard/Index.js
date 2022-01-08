@@ -12,7 +12,6 @@ export default function Dashboard(){
                     <h1 className='text-5xl my-3 font-bold'>
                         30
                     </h1>
-
                 </div>
             </div>
         </div>
