@@ -1,8 +1,10 @@
 import "./index.css";
 import React, { useEffect, useState } from "react";
+import TableRow from "./TableRow";
 
 export default function Customers() {
   const [tableData, setTableData] = useState(null);
+  const [IsPending, setIsPending] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:8000/data")
@@ -11,10 +13,11 @@ export default function Customers() {
       })
       .then((data) => {
         // console.log(data);
-        setTableData(data)
-        console.log(tableData)
+        setTableData(data);
+        console.log(tableData);
+        setIsPending(true);
       });
-  },[]);
+  }, []);
 
   return (
     <div className="page">
@@ -51,7 +54,7 @@ export default function Customers() {
         </div>
       </div>
       <div className="mid-section w-full flex flex-col items-center ">
-        <div className="flex flex-col items-center w-3/6 ">
+        <div className="flex flex-col items-center w-5/6 ">
           <table className="table-fixed text-left w-full ">
             <thead>
               <tr>
@@ -63,27 +66,17 @@ export default function Customers() {
               </tr>
             </thead>
             <tbody>
-              {tableData && <tr className="h-16 text-left border-b border-b border-indigo-800 ">
-                <td className="py-5">
-                  The Sliding Mr. Bones (Next Stop, Pottersville)
-                </td>
-                <td className="py-5">Malcolm Lockyer</td>
-                <td className="py-5">1961</td>
-                <td className="py-5">
-                  <button
-                    className="mx-1 flex-shrink-0 bg-indigo-600 hover:bg-indigo-800 border-indigo-600 hover:border-indigo-800 text-sm border-4 text-white py-1 px-2 rounded"
-                    type="button"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="mx-1 flex-shrink-0 bg-indigo-600 hover:bg-indigo-800 border-indigo-600 hover:border-indigo-800 text-sm border-4 text-white py-1 px-2 rounded"
-                    type="button"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>}
+              {!IsPending && <div>Loading ...</div>}
+              {tableData &&
+                tableData.map((dt,id) => {
+                  return <TableRow
+                    key={id}
+                    id={id+1}
+                    type={dt.type}
+                    name={dt.name}
+                    date={dt.date}
+                  ></TableRow>;
+                })}
             </tbody>
           </table>
         </div>
