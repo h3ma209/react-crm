@@ -23,12 +23,12 @@ export default function Customers() {
     <div className="page">
       <div className="top-section mt-10 h-52 w-full">
         <div className="flex flex-col place-content-center items-center h-full">
-          <form className="w-3/6 ">
+          <form className="w-4/6 ">
             <div className="flex items-center border-b border-indigo-800 py-2">
               <input
                 className="m-3 appearance bg-transparent border-none w-full text-gray-800 mr-3 py-1 px-2 leading-tight focus:outline-none"
                 type="text"
-                placeholder="Search by customer, contract, description, etc..."
+                placeholder="Search by customer, contract, etc..."
                 aria-label="Full name"
               />
               {/* <input
@@ -72,6 +72,7 @@ export default function Customers() {
                   return <TableRow
                     key={id}
                     id={id+1}
+                    deleteId={dt.id}
                     type={dt.type}
                     name={dt.name}
                     date={dt.date}
