@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Add, Delete, SetDT } from "../app/userData";
 import TableRow from "./TableRow";
+import CreateCustomer from "./CreateCustomer";
+
 
 export default function Customers() {
   // const [tableData, setTableData] = useState(null);
@@ -11,25 +13,27 @@ export default function Customers() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    
-    fetch("http://localhost:8000/data")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        // console.log(data);
-        // setTableData(data);
-        setIsPending(true);
-        dispatch(SetDT(data))
-        // console.log(tableData);
-        // console.log(Test)
+    if (TableUserData === null) {
+      fetch("http://localhost:8000/data")
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          // console.log(data);
+          // setTableData(data);
+          setIsPending(true);
 
-      });
+          dispatch(SetDT(data));
+          // console.log(tableData);
+          // console.log(Test)
+        });
+    }
   }, []);
 
   return (
     <div className="page">
       <div className="top-section mt-10 h-52 w-full">
+        <CreateCustomer></CreateCustomer>
         <div className="flex flex-col place-content-center items-center h-full">
           <form className="w-4/6 ">
             <div className="flex items-center border-b border-indigo-800 py-2">
@@ -39,7 +43,7 @@ export default function Customers() {
                 placeholder="Search by customer, contract, etc..."
                 aria-label="Full name"
               />
-           
+
               <button
                 className="m-3 flex-shrink-0 bg-indigo-600 hover:bg-indigo-800 border-indigo-600 hover:border-indigo-800 text-sm border-4 text-white py-1 px-2 rounded"
                 type="button"
