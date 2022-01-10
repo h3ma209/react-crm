@@ -1,12 +1,17 @@
 import "./index.css";
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Add, Delete, SetDT } from "../app/userData";
 import TableRow from "./TableRow";
 
 export default function Customers() {
   const [tableData, setTableData] = useState(null);
   const [IsPending, setIsPending] = useState(false);
+  const Test = useSelector((state) => state.userData.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    
     fetch("http://localhost:8000/data")
       .then((res) => {
         return res.json();
@@ -14,8 +19,11 @@ export default function Customers() {
       .then((data) => {
         // console.log(data);
         setTableData(data);
-        console.log(tableData);
         setIsPending(true);
+        dispatch(SetDT(data))
+        // console.log(tableData);
+        // console.log(Test)
+
       });
   }, []);
 
@@ -68,15 +76,17 @@ export default function Customers() {
             <tbody>
               {!IsPending && <div>Loading ...</div>}
               {tableData &&
-                tableData.map((dt,id) => {
-                  return <TableRow
-                    key={id}
-                    id={id+1}
-                    deleteId={dt.id}
-                    type={dt.type}
-                    name={dt.name}
-                    date={dt.date}
-                  ></TableRow>;
+                tableData.map((dt, id) => {
+                  return (
+                    <TableRow
+                      key={id}
+                      id={id + 1}
+                      deleteId={dt.id}
+                      type={dt.type}
+                      name={dt.name}
+                      date={dt.date}
+                    ></TableRow>
+                  );
                 })}
             </tbody>
           </table>
