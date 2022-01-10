@@ -3,14 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userData = createSlice({
   name: "userData",
   initialState: {
-    value: [
-      // {
-      //   id: "6",
-      //   type: "customer",
-      //   name: "hema",
-      //   date: "2020-1-23",
-      // },
-    ],
+    value: null,
   },
   reducers: {
     Add: (state, action) => {
