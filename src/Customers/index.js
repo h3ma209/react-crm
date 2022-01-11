@@ -1,16 +1,17 @@
 import "./index.css";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Add, Delete, SetDT } from "../app/userData";
+import { SetDT } from "../app/userData";
+import { ToAdd } from "../app/SwitchComponents";
 import TableRow from "./TableRow";
 import CreateCustomer from "./CreateCustomer";
-
 
 export default function Customers() {
   // const [tableData, setTableData] = useState(null);
   const [IsPending, setIsPending] = useState(false);
   const TableUserData = useSelector((state) => state.userData.value);
   const dispatch = useDispatch();
+  const AddorSearch = useSelector((state) => state.SwitchComponents.value);
 
   useEffect(() => {
     if (TableUserData === null) {
@@ -33,8 +34,8 @@ export default function Customers() {
   return (
     <div className="page">
       <div className="top-section mt-10 h-52 w-full">
-        <CreateCustomer></CreateCustomer>
-        <div className="flex flex-col place-content-center items-center h-full">
+        {AddorSearch === "add" && <CreateCustomer></CreateCustomer>}
+        {AddorSearch === 'search' && <div className="flex flex-col place-content-center items-center h-full">
           <form className="w-4/6 ">
             <div className="flex items-center border-b border-indigo-800 py-2">
               <input
@@ -53,12 +54,13 @@ export default function Customers() {
               <button
                 className="m-3 flex-shrink-0 bg-white hover:bg-indigo-800 border-white hover:border-indigo-800 text-sm border-4 text-indigo hover:text-white py-1 px-2 rounded"
                 type="button"
+                onClick={()=>dispatch(ToAdd())}
               >
                 Add +
               </button>
             </div>
           </form>
-        </div>
+        </div>}
       </div>
       <div className="mid-section w-full flex flex-col items-center ">
         <div className="flex flex-col items-center w-5/6 ">

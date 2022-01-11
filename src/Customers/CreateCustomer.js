@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Add, Delete, SetDT } from "../app/userData";
+import { useSelector, useDispatch } from "react-redux";
+import { ToSearch } from "../app/SwitchComponents";
 
 export default function CreateCustomer() {
+  const dispatch = useDispatch();
+
   const [Name, setName] = useState(null);
   const [Type, setType] = useState(null);
   const [TodayDate, setTodayDate] = useState(new Date().toString());
@@ -13,6 +17,9 @@ export default function CreateCustomer() {
   function handleType(event) {
     setType(event.target.value);
     console.log(Type);
+  }
+  function handleCancel(){
+    dispatch(ToSearch())
   }
 
   function handleForm(event) {
@@ -29,12 +36,20 @@ export default function CreateCustomer() {
         type: Type,
         date: TodayDate,
       }),
+    }).then((resp) => {
+      if (resp.status === 201) {
+        dispatch(Add({
+          name: Name,
+          type: Type,
+          date: TodayDate,
+        }))
+      }
     });
   }
 
   return (
     <div>
-      <div className="flex flex-col place-content-center items-center h-full">
+      <div className="flex flex-col place-content-center items-center ">
         <form className="w-4/6 ">
           <div className="flex items-center border-b border-indigo-800 py-2">
             <div class="relative inline-block w-full text-gray-700">
@@ -72,12 +87,13 @@ export default function CreateCustomer() {
             >
               Add +
             </button>
-            <button
+            {<button
               className="m-3 flex-shrink-0 bg-white hover:bg-red-800 border-white hover:border-red-800 text-sm border-4 text-red hover:text-white py-1 px-2 rounded"
               type="button"
+              onClick={handleCancel}
             >
               Cancel
-            </button>
+            </button>}
           </div>
         </form>
       </div>
