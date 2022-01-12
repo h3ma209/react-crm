@@ -22,6 +22,8 @@ export default function CreateCustomer() {
     dispatch(ToSearch())
   }
 
+  
+
   function handleForm(event) {
     event.preventDefault();
     console.log(Name);

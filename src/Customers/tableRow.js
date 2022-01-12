@@ -1,4 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { Delete } from "../app/userData";
+import { useDispatch } from "react-redux";
+
 
 export default function TableRow(props) {
   const id = props.id;
@@ -6,15 +8,13 @@ export default function TableRow(props) {
   const name = props.name;
   const date = props.date;
   const deleteId = props.deleteId;
-  const history = useNavigate();
+  const dispatch = useDispatch()
+
 
   const DeleteData = (dtId) => {
     console.log(dtId);
-    
-    
     fetch("http://localhost:8000/data/" + dtId, { method: "DELETE" }).then(() => {
-      history("/customers");
-      console.log('navigating')
+      dispatch(Delete(dtId))
     });
   };
 

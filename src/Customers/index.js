@@ -13,6 +13,10 @@ export default function Customers() {
   const dispatch = useDispatch();
   const AddorSearch = useSelector((state) => state.SwitchComponents.value);
 
+
+  
+
+
   useEffect(() => {
     if (TableUserData === null) {
       fetch("http://localhost:8000/data")
