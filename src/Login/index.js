@@ -9,7 +9,7 @@ async function loginUser(creds) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(creds),
-  }).then((data) => data.json);
+  }).then((data) => data.json());
 }
 
 export default function Login({ setToken }) {
@@ -23,6 +23,7 @@ export default function Login({ setToken }) {
       password,
     });
     setToken(token);
+    console.log(token)
   };
 
   return (
